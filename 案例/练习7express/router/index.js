@@ -14,7 +14,7 @@ router.get('/userInfo',mw,mw2,(req,res)=>{
 })
 
 router.post('/userInfo',(req,res)=>{
-    console.log(req.body,"1111")
+    console.log(req.body,"---1111")
     res.send('post成功！！')
 })
 

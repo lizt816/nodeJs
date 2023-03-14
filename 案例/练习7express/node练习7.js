@@ -5,12 +5,15 @@
  * 3. 部署静态文件app.use(express.static('public'))
  * 4. 路由封装接口
  * 5. 中间件函数
+ * 6. 第三方中间件
 **/
 
 const express = require('express')
+const parser = require('body-parser')
 const app = express()
 // console.log(express.json(),"111")
-app.use(express.json())
+// app.use(express.json())
+app.use(parser.urlencoded({extended:false}))
 // app.use(express.urlencoded({extended:false}))
 app.use('/imgss',express.static('./public'))
 
