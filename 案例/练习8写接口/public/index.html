@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<style>
+    .meHtml{
+        background-color: aqua;
+        color: #fff;
+    }
+</style>
+<body>
+    <div class="meHtml">
+        我是/index
+    </div>
+    <button id="btnGET">GET</button>
+    <button id="btnPOST">POST</button>
+</body>
+</html>
+<script>
+    console.log("我是script")
+    let meHtml = document.getElementsByClassName('meHtml')
+    console.log(meHtml,"meHtml")
+    meHtml[0].innerText = '我script创建的是html'
+    $('#btnGET').on('click', function () {
+        $.ajax({
+            type:'GET',
+            url:'http://127.0.0.1/api/getUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnPOST').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1/api/postUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+</script>
