@@ -19,6 +19,8 @@
     </div>
     <button id="btnGET">GET</button>
     <button id="btnPOST">POST</button>
+    <button id="btnDELETE">DELETE</button>
+    <button id="btnJSONP">JSONP</button>
 </body>
 </html>
 <script>
@@ -41,6 +43,27 @@
             type:'POST',
             url:'http://127.0.0.1/api/postUserInfo',
             data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnDELETE').on('click', function () {
+        $.ajax({
+            type:'DELETE',
+            url:'http://127.0.0.1/api/deleteUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnJSONP').on('click', function () {
+        $.ajax({
+            type:'GET',
+            url:'http://127.0.0.1/api/jsonp',
+            // data:{name: 'jsonp', age: 20},
+            dataType:'jsonp',
             success: function  (res) {
                 console.log(res)
             }
