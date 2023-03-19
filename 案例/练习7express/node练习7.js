@@ -5,12 +5,17 @@
  * 3. 部署静态文件app.use(express.static('public'))
  * 4. 路由封装接口
  * 5. 中间件函数
+ * 6. 第三方中间件
+ * 7. 用全局中间件监听客户发送过大的数据
 **/
 
 const express = require('express')
+// const parser = require('body-parser')
+const parser = require('./router/parser')
 const app = express()
 // console.log(express.json(),"111")
-app.use(express.json())
+// app.use(express.json())
+// app.use(parser.urlencoded({extended:false}))
 // app.use(express.urlencoded({extended:false}))
 app.use('/imgss',express.static('./public'))
 
@@ -30,18 +35,15 @@ app.use('/imgss',express.static('./public'))
 
 // 以上方式可优化，将这些路由模块化
 
-app.use((req,res,next)=>{
-    console.log('最简单的中间件函数！！')
-    // throw new Error('服务器发生错误！！')
-    req.name = "1223456"
-    next()
-})
+app.use(parser)
 app.use((err,req,res,next)=>{
     console.log(err+'----错误中间件')
     res.send(err+'----错误中间件')
 })
 const userRouter = require('./router/index.js')
+const { json } = require('body-parser')
 app.use('/api',userRouter)
+
 
 app.listen(8081,()=>{
     console.log('express server running at http://127.0.0.1:8081') 
