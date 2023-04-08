@@ -8,7 +8,7 @@ router.get('/getUserInfo',(req,res)=>{
     const query = req.query
     res.send({
        status:200,                    // 状态，表示请求成功
-       msg:'GET请求成功！',   // 描述状态
+       msg:'GET请求成功///！',   // 描述状态
        data:query
     })
 })

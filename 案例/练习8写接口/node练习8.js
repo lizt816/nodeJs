@@ -6,6 +6,7 @@
 
 const express = require('express')
 const router = require('./router/index')
+const public = require('./router/public')
 const cors = require('cors')
 
 const app = express()
@@ -23,7 +24,7 @@ app.get("/api/jsonp",(req, res) => {
 app.use(cors())
 app.use(express.urlencoded({extended:false}))
 app.use('/api',router)
-
+app.use('/t',public)
 app.listen(80,()=>{
     console.log('Express server running at http://127.0.0.1:80')
 })
