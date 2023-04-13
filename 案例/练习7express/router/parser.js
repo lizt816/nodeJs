@@ -7,7 +7,9 @@ const parser = (req,res,next)=>{
      })
     new Promise((resolve,reject)=>{
         req.on('end',()=>{
-            req.body = JSON.parse(str)
+            if(str){
+               req.body = JSON.parse(str)
+            }
             resolve()
          })
      }).then(res=>{
