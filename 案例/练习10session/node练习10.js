@@ -2,22 +2,23 @@
 /*
  * 1. cookie  session
  * 2. 部署静态资源
+ * 3. 使用session进行身份认证
+ * 4. 使用最流行的JWT进行生成token的身份认证
 **/
 
 const express = require('express')
 const router = require('./router/index')
 const cors = require('cors')
-const http = require('http')
-const server = http.createServer()
 const app = express()
 
-let session = require('express-session')
+// let session = require('express-session')
+// app.use(session({
+//     secret:'keyboard cat',
+//     resave:false,
+//     saveUninitialized:true
+// }))
 
-app.use(session({
-    secret:'keyboard cat',
-    resave:false,
-    saveUninitialized:true
-}))
+
 app.get("/api/jsonp",(req, res) => {
     // 1，获取客户端发送过来的回调函数的名字
     const funcName = req.query.callback
@@ -30,34 +31,11 @@ app.get("/api/jsonp",(req, res) => {
 
 app.use(cors())
 app.use(express.urlencoded({extended:false}))
-app.use('/api',router)
+app.use(router)
 app.use('/pages',express.static('./public'))
-
+const {expressjwt} = require('express-jwt')
+const secretKey = 'xiaohehehexiao Miss YOU !! ^_^'
+app.use(expressjwt({secret:secretKey,algorithms:['HS256']}).unless({path:[/^\/api\//]}))
 app.listen(80,()=>{
     console.log('Express server running at http://127.0.0.1:80/pages')
 })
-
-// app.on('request',(req,res)=>{
-//     console.log('request-----')
-//     let method = req.method;
-//     let url = req.url;
-//     let fpath = '';
-//     // 只要有客户端来请求我们自己的服务器，就会触发request事件，调用内部方法
-//     new Promise((resolve,reject)=>{
-//         // if(url === '/'){
-//             fpath = path.join(__dirname,'./public/index.html')
-//         // } else{
-//         //     fpath = path.join(__dirname,'/html',url)
-//         // }
-//         fs.readFile(fpath,'utf8',(err,data)=>{
-//             if(err) return reject({err,res});
-//             resolve({data,res})
-//         })
-//     }).then((res)=>{
-//         console.log(res.data,"--***")
-//         res.res.setHeader('Content-Type', 'text/html; charset=utf-8')
-//         res.res.end(res.data)
-//     }).catch(err=>{
-//         err.res.end('<h1>404 Not found!</h1>')
-//     })
-// })

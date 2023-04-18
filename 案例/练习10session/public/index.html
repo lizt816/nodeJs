@@ -21,13 +21,51 @@
     <button id="btnPOST">POST</button>
     <button id="btnDELETE">DELETE</button>
     <button id="btnJSONP">JSONP</button>
+    <button id="login">login</button>
+    <button id="getuserinfo">getuserinfo</button>
+    <button id="logout">logout</button>
+    
 </body>
 </html>
 <script>
-    console.log("我是script")
+    let token = ''
     let meHtml = document.getElementsByClassName('meHtml')
-    console.log(meHtml,"meHtml")
     meHtml[0].innerText = '我script创建的是html'
+    $('#logout').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1/api/logout',
+            data:{},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+
+    $('#getuserinfo').on('click', function () {
+        $.ajax({
+            type:'GET',
+            headers:{
+             Authorization:token
+            },
+            url:'http://127.0.0.1/admin/getuser',
+            data:{},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#login').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1/api/login',
+            data:{username: 'admin', password: '000000'},
+            success: function  (res) {
+                console.log(res)
+                token = res.token
+            }
+        })
+    })
     $('#btnGET').on('click', function () {
         $.ajax({
             type:'GET',
