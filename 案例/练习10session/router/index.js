@@ -2,17 +2,18 @@ let express = require('express')
 let router = express.Router()
 const jwt = require('jsonwebtoken')
 const secretKey = 'xiaohehehexiao Miss YOU !! ^_^'
-
+const {expressjwt} = require('express-jwt')
 
 router.post('/api/logout',(req,res)=>{
  // req.session.destroy()  // 清空当前客户端对应的 session 信息
  res.send({status:200,msg:'退出登录成功'})
 })
 
-router.get('/admin/getuser',(req,res)=>{
+router.get('/admin/getuser',
+expressjwt({ secret:secretKey, algorithms: ["HS256"] }),
+(req,res)=>{
  // 使用jwt判断是否登录
  console.log(req.auth,"--*111*")
- console.log(req.user,"--**")
  res.send({status:200,msg:'获取成功',username:'req'})
  // 使用session判断用户是否登录
  // if(!req.session.islogin){
@@ -23,8 +24,6 @@ router.get('/admin/getuser',(req,res)=>{
 
 router.post('/api/login',(req,res)=>{
  // 判断用户提交的登录信息身份正确
- console.log(req.body.username)
- console.log(req.body.password,"---")
  if(req.body.username !== 'admin' || req.body.password !== '000000'){
      return res.send({status:1,mag:'登录失败'})
  }
@@ -35,7 +34,7 @@ router.post('/api/login',(req,res)=>{
   res.send({
    status:200,
    mag:'登录成功',
-   token // 使用 jwt 进行身份认证
+   token:'Bearer '+token // 使用 jwt 进行身份认证
   })
 })
 

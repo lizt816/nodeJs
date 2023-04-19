@@ -46,10 +46,11 @@
         $.ajax({
             type:'GET',
             headers:{
-             Authorization:token
+             'Authorization':token,
+             // 'Content-Type': 'application/json'
             },
             url:'http://127.0.0.1/admin/getuser',
-            data:{},
+            data:{token},
             success: function  (res) {
                 console.log(res)
             }
