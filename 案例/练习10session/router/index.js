@@ -13,8 +13,7 @@ router.get('/admin/getuser',
 expressjwt({ secret:secretKey, algorithms: ["HS256"] }),
 (req,res)=>{
  // 使用jwt判断是否登录
- console.log(req.auth,"--*111*")
- res.send({status:200,msg:'获取成功',username:'req'})
+ res.send({status:200,msg:'获取成功',data:req.auth})
  // 使用session判断用户是否登录
  // if(!req.session.islogin){
  //    return res.send({status:300,mag:'未登录'})

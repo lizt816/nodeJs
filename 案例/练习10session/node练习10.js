@@ -36,6 +36,13 @@ app.use('/pages',express.static('./public'))
 const {expressjwt} = require('express-jwt')
 const secretKey = 'xiaohehehexiao Miss YOU !! ^_^'
 app.use(expressjwt({secret:secretKey,algorithms:['HS256']}).unless({path:[/^\/api\//]}))
+app.use((err,req,res,next)=>{
+ if(err.name === 'UnauthorizedError'){
+  return res.send({status:401,message:'无效的token'})
+ }
+ res.send({status:500,message:'未知错误'})
+})
+
 app.listen(80,()=>{
     console.log('Express server running at http://127.0.0.1:80/pages')
 })
