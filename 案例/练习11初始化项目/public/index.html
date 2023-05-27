@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<style>
+    .meHtml{
+        background-color: aqua;
+        color: #fff;
+    }
+</style>
+<body>
+    <div class="meHtml">
+        我是/index
+    </div>
+    <button id="btnGET">GET</button>
+    <button id="btnPOST">POST</button>
+    <button id="btnDELETE">DELETE</button>
+    <button id="btnJSONP">JSONP</button>
+    <button id="reguser">reguser</button>
+    <button id="login">login</button>
+    <button id="getuserinfo">getuserinfo</button>
+    <button id="logout">logout</button>
+    
+</body>
+</html>
+<script>
+    let token = ''
+    let meHtml = document.getElementsByClassName('meHtml')
+    meHtml[0].innerText = '我script创建的是html'
+    $('#logout').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1:1022/api/logout',
+            data:{},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+
+    $('#getuserinfo').on('click', function () {
+        $.ajax({
+            type:'GET',
+            headers:{
+             'Authorization':token,
+             // 'Content-Type': 'application/json'
+            },
+            url:'http://127.0.0.1:1022/admin/getuser',
+            data:{token},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    
+    $('#reguser').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1:1022/api/reguser',
+            data:{username: 'admin', password: '000000'},
+            success: function  (res) {
+                console.log(res)
+                token = res.token
+            }
+        })
+    })
+    $('#login').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1:1022/api/login',
+            data:{username: 'admin', password: '000000'},
+            success: function  (res) {
+                console.log(res)
+                token = res.token
+            }
+        })
+    })
+    $('#btnGET').on('click', function () {
+        $.ajax({
+            type:'GET',
+            url:'http://127.0.0.1:1022/api/getUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnPOST').on('click', function () {
+        $.ajax({
+            type:'POST',
+            url:'http://127.0.0.1:1022/api/postUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnDELETE').on('click', function () {
+        $.ajax({
+            type:'DELETE',
+            url:'http://127.0.0.1:1022/api/deleteUserInfo',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#btnJSONP').on('click', function () {
+        $.ajax({
+            type:'GET',
+            url:'http://127.0.0.1:1022/api/jsonp',
+            // data:{name: 'jsonp', age: 20},
+            dataType:'jsonp',
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+</script>
