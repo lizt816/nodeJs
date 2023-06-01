@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const api = require('../router_handler/user')
 
 router.post('/reguser',(req,res)=>{
- res.send('reguser OK')
+ api.reguser(req,res)
 })
 
 router.post('/login',(req,res)=>{
- res.send('login OK')
+ api.login(req,res)
 })
 
 module.exports = router
