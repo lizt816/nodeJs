@@ -25,9 +25,45 @@
     <button id="getuserinfo">getuserinfo</button>
     <button id="logout">logout</button>
     
+    <div>
+     <button id="addList">点击新增数据</button>
+    </div>
+    <div>
+     <button id="setList">点击修改数据</button>
+    </div>
+    <div>
+     <button id="delList">点击删除数据</button>
+    </div>
+
+    <div class="list">
+
+    </div>
 </body>
 </html>
 <script>
+    $('#addList').on('click', function () {
+        $.ajax({
+            type:'DELETE',
+            url:'http://127.0.0.1/api/addList',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+    $('#addList').on('click', function () {
+        $.ajax({
+            type:'DELETE',
+            url:'http://127.0.0.1/api/addList',
+            data:{name: 'zs', age: 20},
+            success: function  (res) {
+                console.log(res)
+            }
+        })
+    })
+
+
+
     let token = ''
     let meHtml = document.getElementsByClassName('meHtml')
     meHtml[0].innerText = '我script创建的是html'
