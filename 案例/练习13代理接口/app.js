@@ -11,19 +11,11 @@ app.post('/api/proxy', async (req, res) => {
    // 代理接口
     // 发送 HTTP 请求获取图片
     myAxios(req.body).then((response) => {
-     console.log(response,"8888")
-     res.end("");
+     let data = JSON.stringify(response)
+     res.send(data);
     }).catch((error) => {
-     console.log(error,"error")
      res.status(500).json({ error: error.message });
     });
-  //   axios.get(req.body.proxyUrl, { responseType: 'application/json' }).then(response => {
-  //    // 二进制发回去
-  //    res.end("");
-  // }).catch(error => {
-  //   console.error('Error fetching the image:', error.message);
-  //   res.status(500).json({ error: error.message });
-  // });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -31,14 +23,18 @@ app.post('/api/proxy', async (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port 127.0.0.1:${PORT}`);
 });
 
 
+/**
+ * 发送一个请求给其他服务器
+ * params：对面服务器要求的参数值，包括token在内
+*/
 function myAxios(data) {
  // 配置新建一个 axios 实例
  return new Promise((resolve, reject) => {
-  console.log(data,"sssss");
+  console.log(data,"--参数");
   axios({
    method: data.m,
    url: data.proxyUrl,
